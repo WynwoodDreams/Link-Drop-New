@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Link Drop',
-  description: 'Share and discover links',
+  title: 'Link Drop - Learning Hub',
+  description: 'Share, discover, and organize links for learning',
 }
 
 export default function RootLayout({ children }) {
