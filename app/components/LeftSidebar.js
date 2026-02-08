@@ -1,24 +1,22 @@
 'use client'
 
-const suggestedSteps = [
-  { icon: '🔄', label: 'Continue learning React', sub: '3 React items saved', color: '#ff6b35' },
-  { icon: '⚡', label: 'Explore AI/ML content', sub: 'Trending in your network', color: '#ff6b35' },
-  { icon: '🕐', label: 'Review saved items', sub: '6 total items', color: '#ff6b35' },
-  { icon: '🔖', label: 'Add new content', sub: 'Drop a new link', color: '#ff6b35' },
-]
-
 const sources = [
   { name: 'Arxiv', count: 2, pct: 33, color: '#e74c3c' },
   { name: 'Youtube', count: 2, pct: 33, color: '#9b59b6' },
   { name: 'Reddit', count: 2, pct: 33, color: '#3498db' },
 ]
 
-const streakDays = [0, 0, 0, 0, 0, 0, 0]
+export default function LeftSidebar({ onAddLink, onSearch, showToast }) {
+  const suggestedSteps = [
+    { icon: '🎯', label: 'Continue learning React', sub: '3 React items saved', action: () => onSearch && onSearch('react') },
+    { icon: '⚡', label: 'Explore AI/ML content', sub: 'Trending in your network', action: () => onSearch && onSearch('ml') },
+    { icon: '🕐', label: 'Review saved items', sub: '6 total items', action: () => onSearch && onSearch('') },
+    { icon: '🔖', label: 'Add new content', sub: 'Drop a new link', action: () => onAddLink && onAddLink() },
+  ]
 
-export default function LeftSidebar() {
   return (
     <aside className="left-sidebar">
-      <button className="drop-link-btn">+ Drop a Link</button>
+      <button className="drop-link-btn" onClick={() => onAddLink && onAddLink()}>+ Drop a Link</button>
 
       <div className="sidebar-card">
         <h3 className="sidebar-card-title">
@@ -26,7 +24,7 @@ export default function LeftSidebar() {
         </h3>
         <ul className="steps-list">
           {suggestedSteps.map((step, i) => (
-            <li key={i} className="step-item">
+            <li key={i} className="step-item" onClick={() => { step.action(); if (showToast) showToast(step.label) }}>
               <span className="step-icon">{step.icon}</span>
               <div className="step-text">
                 <span className="step-label">{step.label}</span>
@@ -44,7 +42,7 @@ export default function LeftSidebar() {
           <span className="streak-count orange">0 days</span>
         </div>
         <div className="streak-dots">
-          {streakDays.map((d, i) => (
+          {[0, 0, 0, 0, 0, 0, 0].map((d, i) => (
             <div key={i} className={`streak-dot ${d ? 'active' : ''}`} />
           ))}
         </div>
